@@ -1,153 +1,79 @@
 <!DOCTYPE html>
 <html>
-    
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <style type = "text/css">
-            div {
-                text-align: center;
+        <style type="text/css">
+            td {
+              padding: 0 15px;
             }
-            #heading {
-                font-weight: 700;
+            th {
+                padding: 0 15px;
             }
-
-            .title{
-                display: inline;
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-        </style>
+          </style>
+          
         <meta charset="utf-8">
+
+
     </head>
-    
     <body>
         <div class = container>
             <h3>Number table</h3> 
+            <form id="myForm" action="http://localhost:3000/api/numbers" method="get">
+                <p>
+                <label>Имя</label><br>
+                <input type="number" name="id"/>
+                <input type="submit" value="Отправить"/>
+                </p>
+            </form>
 
-            <div class="title"><span style="margin-right: 325px;">ID</span>  <span>Number</span>     <span style="margin-left: 325px;">Country</span></div> 
-      
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">1</div> 
-                <div class="col border border-dark">+61</div> 
-                <div class="col border border-dark">Australia</div> 
-                
-            </div> 
-      
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">2</div> 
-                <div class="col border border-dark">+375</div> 
-                <div class="col border border-dark">Belgium</div> 
-                
-            </div> 
-      
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">3</div> 
-                <div class="col border border-dark">+44</div> 
-                <div class="col border border-dark">Ukrain</div> 
-        
-            </div> 
-      
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">4</div> 
-                <div class="col border border-dark">+36</div> 
-                <div class="col border border-dark">Hungry</div>  
-            </div> 
 
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">5</div> 
-                <div class="col border border-dark">+509</div> 
-                <div class="col border border-dark">Haiti</div>  
-            </div>
+            <script>
             
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">6</div> 
-                <div class="col border border-dark">+49</div> 
-                <div class="col border border-dark">German</div>  
-            </div>
+                const myForm = document.getElementById("myForm");
+                myForm.addEventListener("submit", async (e)=>{
+                    e.preventDefault();
+                    const id = myForm.id.value;
+                    var request = new XMLHttpRequest();
+                    if (id < 21){
+                    request.open('GET', `http://localhost:3000/api/numbers?search=${id}`);
+                    request.onload = () => {
+                        const results = JSON.parse(request.responseText);
+                        if (results.length > 0){
+                            for (var i = 0; i < results.length; i++){
+                                let table = document.getElementById('tableBody');
+                                let row = document.createElement("tr")
+                                let c1 = document.createElement("td")
+                                let c2 = document.createElement("td")
+                                let c3 = document.createElement("td")
+                                
+                                c1.innerText = `${results[i].id}`;
+                                c2.innerText = `${results[i].numb}`;
+                                c3.innerText = `${results[i].country}`;
 
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">7</div> 
-                <div class="col border border-dark">+30</div> 
-                <div class="col border border-dark">Greece</div>  
-            </div>
+                                row.appendChild(c1);
+                                row.appendChild(c2);
+                                row.appendChild(c3);
+                                table.appendChild(row);
+                            }
+                        }
+                    }
+                    request.send();
+                    }
+                });
+            </script>
+      
+            <div> 
+                <table id="myTable">
+                    <thead>
+                       <th>  ID</th>
+                       <th> Number </th>
+                       <th> Country </th>
+                    </thead>
+                    <tbody id="tableBody">
+                        
+                    </tbody>
+            </div> 
 
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">8</div> 
-                <div class="col border border-dark">+45</div> 
-                <div class="col border border-dark">Denmark</div>  
-            </div>
-
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">9</div> 
-                <div class="col border border-dark">+972</div> 
-                <div class="col border border-dark">Israel</div>  
-            </div>
-
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">10</div> 
-                <div class="col border border-dark">+353</div> 
-                <div class="col border border-dark">Ireland</div>  
-            </div>
-
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">11</div> 
-                <div class="col border border-dark">+1</div> 
-                <div class="col border border-dark">Canada</div>  
-            </div>
-
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">12</div> 
-                <div class="col border border-dark">+86</div> 
-                <div class="col border border-dark">China</div>  
-            </div>
-
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">13</div> 
-                <div class="col border border-dark">+53</div> 
-                <div class="col border border-dark">Cuba</div>  
-            </div>
-
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">14</div> 
-                <div class="col border border-dark">+52</div> 
-                <div class="col border border-dark">Mexica</div>  
-            </div>
-
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">15</div> 
-                <div class="col border border-dark">+377</div> 
-                <div class="col border border-dark">Monaco</div>  
-            </div>
-
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">16</div> 
-                <div class="col border border-dark">+31</div> 
-                <div class="col border border-dark">Netherlands</div>  
-            </div>
-
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">17</div> 
-                <div class="col border border-dark">+47</div> 
-                <div class="col border border-dark">Norway</div>  
-            </div>
-
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">18</div> 
-                <div class="col border border-dark">+351</div> 
-                <div class="col border border-dark">Portugal</div>  
-            </div>
-
-            <div class="row border border-dark"> 
-                <div class="col border border-dark">19</div> 
-                <div class="col border border-dark">+90</div> 
-                <div class="col border border-dark">Turkey</div>  
-            </div>
-
-            <div class="row border border-dark bg-info"> 
-                <div class="col border border-dark">20</div> 
-                <div class="col border border-dark">+358</div> 
-                <div class="col border border-dark">Finland</div>  
-            </div>
         </div>
     </body>
 </html>
